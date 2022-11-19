@@ -36,13 +36,10 @@ class App extends Component {
           return;
         }
       this.setState({ articles: response.data.hits });
-
-      response.data.hits.forEach(({ id, webformatURL, largeImageURL, tags }) => {
-        return this.setState(prev=>({
-          photos:[...prev.photos,{ id, webformatURL, largeImageURL, tags }],
-          totalPages: Math.ceil(response.data.totalHits/12)
-        })) 
-      });
+      this.setState(prev=>({
+        photos:[...prev.photos,...response.data.hits],
+        totalPages: Math.ceil(response.data.totalHits/12)
+      }))
     }
   }
   handleSubmit=(name)=>{
