@@ -36,10 +36,12 @@ class App extends Component {
           return;
         }
       this.setState({ articles: response.data.hits });
-      this.setState(prev=>({
-        photos:[...prev.photos,...response.data.hits],
-        totalPages: Math.ceil(response.data.totalHits/12)
-      }))
+      response.data.hits.forEach(({ id, webformatURL, largeImageURL, tags }) => {
+        return this.setState(prev=>({
+          photos:[...prev.photos,{ id, webformatURL, largeImageURL, tags }],
+          totalPages: Math.ceil(response.data.totalHits/12)
+        })) 
+      });
     }
   }
   handleSubmit=(name)=>{
@@ -64,7 +66,7 @@ this.setState(prevState=>({page:prevState.page+1}))
       <Searchbar onSubmit={this.handleSubmit}/>
       {isLoading && <Spinner/>}
       {showModal && <Modal src={largeImage} onClose={this.onModalClose}/>  }
-      <ImageGallery items={photos} onClick={this.onClick}/>
+      {this.state.photos.length>0`` && <ImageGallery items={photos} onClick={this.onClick}/>}
       {photos.length!==0 && totalPages>page && ( <Button onLoadMore={this.loadMore}/>)}
       <BtnScrollUp/>
       </>
