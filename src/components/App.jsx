@@ -35,7 +35,6 @@ class App extends Component {
           this.setState({ images: [] });
           return;
         }
-      this.setState({ articles: response.data.hits });
       response.data.hits.forEach(({ id, webformatURL, largeImageURL, tags }) => {
         return this.setState(prev=>({
           photos:[...prev.photos,{ id, webformatURL, largeImageURL, tags }],
@@ -66,7 +65,7 @@ this.setState(prevState=>({page:prevState.page+1}))
       <Searchbar onSubmit={this.handleSubmit}/>
       {isLoading && <Spinner/>}
       {showModal && <Modal src={largeImage} onClose={this.onModalClose}/>  }
-      {this.state.photos.length>0`` && <ImageGallery items={photos} onClick={this.onClick}/>}
+      {this.state.photos.length>0 && <ImageGallery items={photos} onClick={this.onClick}/>}
       {photos.length!==0 && totalPages>page && ( <Button onLoadMore={this.loadMore}/>)}
       <BtnScrollUp/>
       </>
