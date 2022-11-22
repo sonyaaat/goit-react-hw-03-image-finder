@@ -28,7 +28,7 @@ class App extends Component {
       const response = await api
         .fetchImages(query, page)
         .catch(error => this.setState({ error }))
-        .finally( this.setState({ isLoading: false }))
+        .finally( ()=>this.setState({ isLoading: false }))
         if (response.data.totalHits === 0)
         {
           Notiflix.Notify.failure('Enter correct request');
